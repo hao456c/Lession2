@@ -1,5 +1,5 @@
 <?php
-    class BaseModel extends Database
+    abstract class BaseModel extends Database
     {
         protected $connect;
 

@@ -110,7 +110,7 @@
                     </div>
                     <div class="form-outline mb-2">
                         <label class="form-label" for="role">Role</label>
-                        <label class="form-control" id="role"><?php echo $data['value']['role']  ? 'Admin' : 'User' ?></label>
+                        <label class="form-control" id="role"><?php echo $data['value']['role'] == 1 ? 'Admin' : 'User' ?></label>
                     </div>
                 </div>
             </div>  
