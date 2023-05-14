@@ -19,9 +19,27 @@
                         <label class="form-label" for="role">Role</label>
                         <label class="form-control" id="role"><?php echo $data['user']['role']  ? 'Admin' : 'User' ?></label>
                     </div>
+                    <button class="btn btn-primary" onClick="copy()">Copy</button>
                 </div>
             </div>  
         </div>
+    <script>
+        function copy() {
+            var value = 
+                'fullname: ' + <?php echo "'" . $data['user']['full_name'] . "' " ?> +
+                ', email: ' + <?php echo "'" . $data['user']['email'] . "' " ?> +
+                ', role:' + <?php echo $data['user']['role']  ? "'Admin'" : "'User'" ?>
+                ;
+            
+            var tempInput = document.createElement("input");
+            tempInput.setAttribute("value", value);
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+    </script>
 <?php 
     require('../Views/Components/footer.php');
 ?> 

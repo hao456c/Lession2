@@ -21,19 +21,19 @@
         }
 
         //khởi tạo dữ liệu mới
-        public function store()
+        public function store($data)
         {
 
         }
 
         //thay đổi dữ liệu
-        public function update()
+        public function update($data)
         {
 
         }
 
         //xóa dữ liệu
-        public function delete()
+        public function delete($id)
         {
 
         }

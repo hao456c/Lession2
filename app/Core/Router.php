@@ -3,6 +3,8 @@
 class Router {
 	private static $controllerLink ='../app/Controllers/';
 	private static $controllerNamespace = 'App\\Controllers\\';
+
+	//lưu các loại request
 	public static $routes = [
 		'GET'  => [],
 		"POST" => [],
@@ -10,7 +12,6 @@ class Router {
 		"PATCH" => [],
 		"PUT" => []
 	];
-	
 	
 	public static function get( $url, $controller ) {
 		
@@ -32,7 +33,7 @@ class Router {
         return self::$routes["PATCH"][ trim($url,'/') ] = $controller;
     }
 
-
+	//khởi tạo
     public static function load($files=[] ) {
 	    $instance = new static();
 
@@ -42,6 +43,7 @@ class Router {
 		return $instance;
 	}
 	
+	//định hướng route về controller và action tương ứng
 	public static function direct( $url,$requestType ) {
 
 	    if(!isset(self::$routes[$requestType])){
@@ -61,7 +63,7 @@ class Router {
 		return 1;
 	}
 
-
+	//điều hướng controller và action tương ứng
     protected static function mapController($controller, $action){
 		require(self::$controllerLink.$controller.'.php');
 		$controller= new (self::$controllerNamespace.$controller); 

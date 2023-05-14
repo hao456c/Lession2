@@ -17,6 +17,9 @@
 
         public function login()
         {
+            if(isset($_COOKIE['id']) || isset($_SESSION['id'])) {
+                return header('location:/lession2/public/index.php/');
+            }
             return $this->view('Layout.Login.index',[
                 'title' => 'Login'
             ]);
@@ -24,7 +27,28 @@
 
         public function register()
         {
-            return $this->view('Layout.register.index');
+            if(isset($_COOKIE['id']) || isset($_SESSION['id'])) {
+                return header('location:/lession2/public/index.php/');
+            }
+            return $this->view('Layout.register.index',[
+                'title' => 'Register',
+            ]);
+        }
+
+        public function store()
+        {
+            if($this->userModel->findByEmail($_REQUEST['email']) !== NULL) {
+                return $this->view('Layout.Register.index',[
+                    'title' => 'Register',
+                    'message' => 'The email already exists'
+                ]);
+            }
+            unset($_REQUEST['confirm_password']);
+            $this->userModel->store($_REQUEST);
+            return $this->view('Layout.Register.index',[
+                'title' => 'Register',
+                'message' => 'Successfully'
+            ]);
         }
 
         public function checkLogin()
@@ -35,6 +59,7 @@
                 Session::set('id', $user['id']);
                 if(isset($_REQUEST['rememberMe'])) {
                     setcookie('role', $user['role'], time() + (6 * 60 * 60));
+                    setcookie('id', $user['id'], time() + (6 * 60 * 60));
                 }
                 return header('location:/lession2/public/index.php/');
             }
@@ -50,6 +75,7 @@
         {
             session_destroy();
             setcookie('role', '', time() - 3600);
+            setcookie('id', '', time() - 3600);
             return header('location:/lession2/public/index.php/');
         }
     }
