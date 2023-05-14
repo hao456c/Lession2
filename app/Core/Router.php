@@ -65,7 +65,6 @@ class Router {
     protected static function mapController($controller, $action){
 		require(self::$controllerLink.$controller.'.php');
 		$controller= new (self::$controllerNamespace.$controller); 
-
 		return $controller->$action();
 		
 	}

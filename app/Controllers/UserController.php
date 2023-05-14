@@ -1,21 +1,35 @@
 <?php 
     namespace App\Controllers;
+    use Session;
     require('BaseController.php');
-
+    require('../app/Core/Session.php');
     class UserController extends BaseController
     {
+        protected $userModel;
+
+        public function __construct()
+        {
+            $this->loadModel('User');
+            $this->userModel = new \User;
+            Session::init();
+        }
+
         public function index()
         {
-            $userList = [
-                [
-                    'id' => 1,
-                    'full_name' => 'Administrator',
-                    'email' => 'admin@admin.com',
-                    'role' => 'Admin',
-                ]
-            ];
+            $value = '';
+            if(isset($_SESSION['role']) ) {
+                if($_SESSION['role'] == $this->userModel::ROLE_USER) {
+                    $value = $this->userModel->findById($_SESSION['id']);
+                    $value['role'] = 'User';
+                } else {
+                    $value = $this->userModel->getAll();
+                    var_dump($value);
+                }
+            }
+           
             return $this->view('Layout.Home.index', [
-                'users' => $userList
+                'value' => $value,
+                'title' => 'Home',
             ]);
         }
 
